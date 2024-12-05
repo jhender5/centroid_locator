@@ -1,0 +1,20 @@
+
+#centroidCanvas {
+    background: silver;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+#graphSpace{
+    background: black;
+    position: relative;
+    z-index: 1;
+}
+
+html, body{
+    margin: 0px;
+    overflow: hidden;
+    display: block;
+}
