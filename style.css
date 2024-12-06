@@ -9,7 +9,7 @@
 
 #graphSpace{
     background: black;
-    position: relative;
+    position: absolute;
     z-index: 1;
 }
 
