@@ -7,10 +7,12 @@ bgCanvas.height=window.innerHeight;
 let graphCanvas=document.getElementById("graphSpace");
 let graphCanvasCTX=graphCanvas.getContext('2d');
 
-let shapeGraphDimensions={x:Math.floor(window.innerWidth*(2/10)),
-                                y:Math.floor(window.innerHeight*(2/10)),
-                                width:Math.floor(window.innerWidth*(3/4)),
-                                height:Math.floor(window.innerHeight*(6/10))};
+let shapeGraphDimensions={x:Math.floor(bgCanvas.width*(2/10)),
+                                y:Math.floor(bgCanvas.height*(2/10)),
+                                width:Math.floor(bgCanvas.width*(3/4)),
+                                height:Math.floor(bgCanvas.height*(6/10))};
+console.log(shapeGraphDimensions);
+
 
 
 
@@ -32,6 +34,7 @@ let mouseDomain="none"
 //Shape drawing variables
 let drawnShapes = new CompositeShape();
 let triangleOrientation = 1;
+let nextID=1;
 
 //UI variables
 //shape button section
@@ -49,11 +52,44 @@ calculateCentroidButton.rectBGWidth=buttonSize*2.5;
 //shape modifying section
 let rotateTriangleButton=new ShapeButton(bgCanvas.width*3/10, bgCanvas.height/10, buttonSize, "triangle");
 let editingShapeID=undefined;
-let heightBox;
-let widthBox;
-let xBox;
-let yBox;
-let radiusBox;
+
+let xBox = document.getElementById('xBox');
+xBox.style.left = (bgCanvas.width / 4) + 'px';
+xBox.style.top = (bgCanvas.height / 20) + 'px';
+let yBox = document.getElementById('yBox');
+yBox.style.left = (bgCanvas.width / 4) + 'px';
+yBox.style.top = (bgCanvas.height / 10) + 'px';
+let widthBox = document.getElementById('widthBox');
+widthBox.style.left = (bgCanvas.width / 2) + 'px';
+widthBox.style.top = (bgCanvas.height / 20) + 'px';
+let heightBox = document.getElementById('heightBox');
+heightBox.style.left = (bgCanvas.width / 2) + 'px';
+heightBox.style.top = (bgCanvas.height / 10) + 'px';
+let radiusBox = document.getElementById('radiusBox');
+radiusBox.style.left = (bgCanvas.width / 4) + 'px';
+radiusBox.style.top = (bgCanvas.height / 10) + 'px';
+
+let xEnterButton=document.getElementById('xPositionEnter');
+let yEnterButton=document.getElementById('yPositionEnter');
+let widthEnterButton=document.getElementById('widthEnter');
+let heightEnterButton=document.getElementById('heightEnter');
+let radiusEnterButton=document.getElementById('radiusEnter');
+
+
+xEnterButton.style.left = (bgCanvas.width / 4 + xBox.offsetWidth + 10) + 'px';
+xEnterButton.style.top = xBox.style.top;
+
+yEnterButton.style.left = (bgCanvas.width / 4 + yBox.offsetWidth + 10) + 'px';
+yEnterButton.style.top = yBox.style.top;
+
+widthEnterButton.style.left = (bgCanvas.width / 2 + widthBox.offsetWidth + 10) + 'px';
+widthEnterButton.style.top = widthBox.style.top;
+
+heightEnterButton.style.left = (bgCanvas.width / 2 + heightBox.offsetWidth + 10) + 'px';
+heightEnterButton.style.top = heightBox.style.top;
+
+radiusEnterButton.style.left = (bgCanvas.width / 4 + radiusBox.offsetWidth + 10) + 'px';
+radiusEnterButton.style.top = radiusBox.style.top;
 
 
 
@@ -86,16 +122,25 @@ graphCanvas.addEventListener("click", function (info){
     const point={x:graphCanvasMouseX, y: graphCanvasMouseY};
 
     if(placingShape === "none"){
-        //TODO: code to modify shapes
-
+        info=drawnShapes.getIntersectingShape(point);
+        if(info){
+            editingShapeID = info;
+            console.log(info);
+            console.log(editingShapeID);
+        } else {
+            editingShapeID = undefined;
+        }
     } else if(placingShape === "triangle"){
-        drawnShapes.addShape(new Triangle(graphCanvasMouseX,graphCanvasMouseY, 30, 30, triangleOrientation));
+        drawnShapes.addShape(new Triangle(graphCanvasMouseX,graphCanvasMouseY, 30, 30, triangleOrientation, nextID));
+        nextID++;
         placingShape='none';
     } else if(placingShape === "rectangle"){
-        drawnShapes.addShape(new Rectangle(graphCanvasMouseX, graphCanvasMouseY, 30, 30));
+        drawnShapes.addShape(new Rectangle(graphCanvasMouseX, graphCanvasMouseY, 30, 30, nextID));
+        nextID++;
         placingShape='none';
     } else if(placingShape === "circle"){
-        drawnShapes.addShape(new Circle(graphCanvasMouseX, graphCanvasMouseY, 15));
+        drawnShapes.addShape(new Circle(graphCanvasMouseX, graphCanvasMouseY, 15, nextID));
+        nextID++;
         placingShape='none';
     }
 })
@@ -125,12 +170,107 @@ bgCanvas.addEventListener("click", function (info){
 })
 
 
+// Add event listeners for the buttons
+
+xEnterButton.addEventListener("click", function () {
+    const xValue = parseFloat(xBox.value);
+    if (!isNaN(xValue) && editingShapeID) {
+        drawnShapes.modifyShapeByID(editingShapeID.id, {xPos: xValue});
+    }
+});
+
+yEnterButton.addEventListener("click", function () {
+    const yValue = parseFloat(yBox.value);
+    if (!isNaN(yValue) && editingShapeID) {
+        drawnShapes.modifyShapeByID(editingShapeID.id, {yPos: yValue});
+    }
+});
+
+widthEnterButton.addEventListener("click", function () {
+    const widthValue = parseFloat(widthBox.value);
+    if (!isNaN(widthValue) && editingShapeID) {
+        drawnShapes.modifyShapeByID(editingShapeID.id, {width: widthValue});
+    }
+});
+
+heightEnterButton.addEventListener("click", function () {
+    const heightValue = parseFloat(heightBox.value);
+    if (!isNaN(heightValue) && editingShapeID) {
+        drawnShapes.modifyShapeByID(editingShapeID.id, {height: heightValue});
+    }
+});
+
+radiusEnterButton.addEventListener("click", function () {
+    const radiusValue = parseFloat(radiusBox.value);
+    if (!isNaN(radiusValue) && editingShapeID) {
+        drawnShapes.modifyShapeByID(editingShapeID.id, {radius: radiusValue});
+    }
+});
+
+
+
 //This function draws the user interface and canvas
 function draw(){
 
     //clear last frame
     bgCanvasCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height)
     graphCanvasCTX.clearRect(0,0, graphCanvas.width, graphCanvas.height)
+
+    if(editingShapeID){
+        const shapeData=drawnShapes.getPropertiesByID(editingShapeID.id)
+        if(shapeData){
+
+            switch (shapeData.type) {
+                case 'triangle':
+                    
+// Set z-index for text inputs and corresponding buttons
+                    xBox.zIndex = 3;
+                    yBox.zIndex = 3;
+                    widthBox.zIndex = 3;
+                    heightBox.zIndex = 3;
+
+                    xEnterButton.zIndex = 3;
+                    yEnterButton.zIndex = 3;
+                    widthEnterButton.zIndex = 3;
+                    heightEnterButton.zIndex = 3;
+                    break;
+                case 'rectangle':
+                    xBox.zIndex = 3;
+                    yBox.zIndex = 3;
+                    widthBox.zIndex = 3;
+                    heightBox.zIndex = 3;
+
+                    xEnterButton.zIndex = 3;
+                    yEnterButton.zIndex = 3;
+                    widthEnterButton.zIndex = 3;
+                    heightEnterButton.zIndex = 3;
+                    break;
+                case 'circle':
+                    xBox.zIndex = 3;
+                    yBox.zIndex = 3;
+                    radiusBox.zIndex = 3;
+
+                    xEnterButton.zIndex = 3;
+                    yEnterButton.zIndex = 3;
+                    radiusEnterButton.zIndex = 3;
+
+                    break;
+                default:
+                    xBox.zIndex = 0;
+                    yBox.zIndex = 0;
+                    widthBox.zIndex = 0;
+                    heightBox.zIndex = 0;
+                    radiusBox.zIndex = 0;
+
+                    xEnterButton.zIndex = 0;
+                    yEnterButton.zIndex = 0;
+                    widthEnterButton.zIndex = 0;
+                    heightEnterButton.zIndex = 0;
+                    radiusEnterButton.zIndex = 0;
+
+            }
+        }
+    }
 
     //ui for adding shapes
     addTriangleButton.draw(bgCanvasCtx);
@@ -151,6 +291,7 @@ function draw(){
 
     drawnShapes.renderShapes(graphCanvasCTX, graphCanvas);
     //TODO: make UI for modifying shapes
+
 
 
     //draw ui for calculating Centroid

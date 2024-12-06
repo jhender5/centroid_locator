@@ -9,11 +9,42 @@
 <body>
     <canvas id="centroidCanvas"></canvas>
     <canvas id="graphSpace" height="500" width="500"></canvas>
+    <label for="heightInput">Change the height:</label><input type="text" id="heightInput" placeholder="height"/>
+    <label for="xPositionInput">Change the x position:</label><input type="text" id="xPositionInput"
+                                                                     placeholder="x position"/>
+    <label for="widthInput">Change the width:</label><input type="text" id="widthInput" placeholder="width"/>
+    <label for="yPositionInput">Change the y position:</label><input type="text" id="yPositionInput"
+                                                                     placeholder="y position"/>
+    <label for="radiusInput">Change the radius:</label><input type="text" id="radiusInput" placeholder="radius"/>
+
+    <button id="heightEnter">Enter</button>
+    <button id="xPositionEnter">Enter</button>
+    <button id="widthEnter">Enter</button>
+    <button id="yPositionEnter">Enter</button>
+    <button id="radiusEnter">Enter</button>
+
+
+    <form id="triangleOrientationForm">
+        <p>Select Triangle Orientation:</p>
+        <label>
+            <input type="radio" name="triangleOrientation" value="up" checked/> 1
+        </label>
+        <label>
+            <input type="radio" name="triangleOrientation" value="down"/> 2
+        </label>
+        <label>
+            <input type="radio" name="triangleOrientation" value="left"/> 3
+        </label>
+        <label>
+            <input type="radio" name="triangleOrientation" value="right"/> 4
+        </label>
+    </form>
 
     <script src="shapes.js"></script>
     <script src="compositeShape.js"></script>
     <script src="graph.js"></script>
     <script src="buttons.js"></script>
+    <script src="textBox.js"></script>
     <script src="centroidFinderEngine.js"></script>
 </body>
 </html>

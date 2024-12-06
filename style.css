@@ -1,20 +1,28 @@
 
 #centroidCanvas {
-    background: silver;
+    background: lightblue;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: 1;
 }
 
 #graphSpace{
     background: black;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
 }
 
 html, body{
     margin: 0px;
     overflow: hidden;
     display: block;
+}
+
+#heightInput {
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }

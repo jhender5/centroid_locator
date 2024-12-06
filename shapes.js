@@ -5,6 +5,11 @@ class Shape{
     #isHole;
     #type;
     #id;
+    constructor(xPos, yPos, id) {
+        this.#xPos = xPos;
+        this.#yPos = yPos;
+        this.#id = id;
+    }
 
     get id() {
         return this.#id;
@@ -20,11 +25,6 @@ class Shape{
 
     set type(value) {
         this.#type = value;
-    }
-
-    constructor(xPos, yPos) {
-        this.#xPos = xPos;
-        this.#yPos = yPos;
     }
 
     get xPos() {
@@ -58,8 +58,8 @@ class Shape{
 
 class Circle extends Shape{
     #radius;
-    constructor(xPos, yPos, radius) {
-        super(xPos, yPos);
+    constructor(xPos, yPos, radius, id) {
+        super(xPos, yPos, id);
         this.#radius = radius;
         super.type="circle"
     }
@@ -98,8 +98,8 @@ class Circle extends Shape{
 class Rectangle extends Shape{
     #width;
     #height;
-    constructor(xPos, yPos, width, height) {
-        super(xPos, yPos)
+    constructor(xPos, yPos, width, height, id) {
+        super(xPos, yPos, id)
         this.#width = width;
         this.#height = height;
         super.type='rectangle'
@@ -145,8 +145,8 @@ class Rectangle extends Shape{
 class Triangle extends Rectangle{
     #orientation;
 
-    constructor(xPos, yPos, width, height, orientation,) {
-        super(xPos, yPos, width, height);
+    constructor(xPos, yPos, width, height, orientation, id) {
+        super(xPos, yPos, width, height, id);
         this.#orientation = orientation;
         super.type='triangle'
     }

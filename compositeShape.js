@@ -157,7 +157,7 @@ class CompositeShape{
         const matchesID = (element) => element.id = id;
         const index=this.#shapes.findIndex(matchesID);
         if (index>=0){
-            const data={id:this.#shapes[index].id};
+            const data={id:this.#shapes[index].id, type:this.#shapes[index].type};
 
             switch (this.#shapes[index].type) {
                 case 'triangle':
@@ -183,7 +183,7 @@ class CompositeShape{
             }
             return data;
         }
-        return false;
+        return undefined;
     }
 
     getIntersectingShape(point){
@@ -222,6 +222,16 @@ class CompositeShape{
             }
         }
         return intersectsShape;
+    }
+
+    deleteShapeByID(id) {
+        const matchesID = (element) => element.id === id;
+        const index = this.#shapes.findIndex(matchesID);
+        if (index >= 0) {
+            this.#shapes.splice(index, 1);
+            return true;
+        }
+        return false;
     }
 }
 
