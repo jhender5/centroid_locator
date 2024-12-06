@@ -49,7 +49,11 @@ calculateCentroidButton.rectBGWidth=buttonSize*2.5;
 //shape modifying section
 let rotateTriangleButton=new ShapeButton(bgCanvas.width*3/10, bgCanvas.height/10, buttonSize, "triangle");
 let editingShapeID=undefined;
-
+let heightBox;
+let widthBox;
+let xBox;
+let yBox;
+let radiusBox;
 
 
 
