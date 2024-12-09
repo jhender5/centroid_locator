@@ -9,6 +9,7 @@ class Shape{
         this.#xPos = xPos;
         this.#yPos = yPos;
         this.#id = id;
+        this.isHole = false;
     }
 
     get id() {
@@ -32,7 +33,9 @@ class Shape{
     }
 
     set xPos(value) {
+        console.log(value);
         this.#xPos = value;
+        console.log(this.#xPos);
     }
 
     get yPos() {
@@ -53,6 +56,10 @@ class Shape{
 
     intersects(point){
         throw new Error('You have to implement the method intersect!');
+    }
+
+    invert(){
+        this.isHole = !this.isHole;
     }
 }
 

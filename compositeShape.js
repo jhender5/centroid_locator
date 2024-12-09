@@ -67,9 +67,15 @@ class CompositeShape{
     }
 
     renderShapes(context, canvas){
-        const shapeColor='pink';
-        context.fillStyle='pink';
+        let shapeColor;
+        context.fillStyle=shapeColor;
         for(const shape of this.#shapes) {
+            if(shape.isHole){
+                shapeColor="white";
+            } else {
+                shapeColor='pink';
+            }
+            context.fillStyle=shapeColor;
             if (shape.type === "rectangle"){
                 let rectXPos= shape.xPos - shape.width/2;
                 let rectYpos=shape.yPos - shape.width/2;
@@ -94,6 +100,9 @@ class CompositeShape{
         if(index >= 0){
             let type = this.#shapes[index].type;
             attributes=attributes[0];
+            if(attributes.invertIsHole){
+                this.#shapes[index].invert();
+            }
             switch (type) {
                 case 'triangle':
                     if(attributes.width){
@@ -107,6 +116,12 @@ class CompositeShape{
                     }
                     if (attributes.yPos){
                         this.#shapes[index].yPos = attributes.yPos;
+                    }
+                    if(attributes.rotate){
+                        this.#shapes[index].orientation = this.#shapes[index].orientation + 1;
+                        if (this.#shapes[index].orientation > 4) {
+                            this.#shapes[index].orientation = 1;
+                        }
                     }
                     break;
                 case 'circle':
@@ -128,7 +143,6 @@ class CompositeShape{
                         this.#shapes[index].height = attributes.height;
                     }
                     if(attributes.xPos){
-                        console.log(this.#shapes[index].xPos);
                         this.#shapes[index].xPos = attributes.xPos;
                     }
                     if (attributes.yPos){

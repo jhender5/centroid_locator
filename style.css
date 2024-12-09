@@ -28,7 +28,7 @@ html, body{
     z-index: 0;
 }
 
-#heightEnter, #widthEnter, #xPositionEnter, #yPositionEnter, #radiusEnter, #invertShape, #Delete{
+#heightEnter, #widthEnter, #xPositionEnter, #yPositionEnter, #radiusEnter, #Invert, #Delete, #Rotate{
     position: absolute;
     z-index: 0;
 }
