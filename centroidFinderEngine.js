@@ -165,7 +165,7 @@ bgCanvas.addEventListener("click", function (info){
             placingShape = "none";
         } else placingShape = "circle"
     } else if(calculateCentroidButton.intersects(point)){
-        centroid = drawnShapes.computeCentroid(100, shapeGraph);
+        centroid = drawnShapes.computeCentroid(5000, shapeGraph);
     }
 })
 
