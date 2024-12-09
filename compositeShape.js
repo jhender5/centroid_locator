@@ -68,7 +68,6 @@ class CompositeShape{
 
     renderShapes(context, canvas){
         let shapeColor;
-        context.fillStyle=shapeColor;
         for(const shape of this.#shapes) {
             if(shape.isHole){
                 shapeColor="white";

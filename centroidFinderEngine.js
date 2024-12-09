@@ -246,32 +246,42 @@ function draw(){
                     yBox.style.zIndex = 3;
                     widthBox.style.zIndex = 3;
                     heightBox.style.zIndex = 3;
+                    radiusBox.style.zIndex = 0;
 
                     xEnterButton.style.zIndex = 3;
                     yEnterButton.style.zIndex = 3;
                     widthEnterButton.style.zIndex = 3;
                     heightEnterButton.style.zIndex = 3;
                     rotateShapeButton.style.zIndex = 3;
+                    radiusEnterButton.style.zIndex = 0;
                     break;
                 case 'rectangle':
                     xBox.style.zIndex = 3;
                     yBox.style.zIndex = 3;
                     widthBox.style.zIndex = 3;
                     heightBox.style.zIndex = 3;
+                    radiusBox.style.zIndex = 0;
 
                     xEnterButton.style.zIndex = 3;
                     yEnterButton.style.zIndex = 3;
                     widthEnterButton.style.zIndex = 3;
                     heightEnterButton.style.zIndex = 3;
+                    rotateShapeButton.style.zIndex = 0;
+                    radiusEnterButton.style.zIndex = 0;
                     break;
                 case 'circle':
                     xBox.style.zIndex = 3;
                     yBox.style.zIndex = 3;
                     radiusBox.style.zIndex = 3;
+                    heightBox.style.zIndex = 0;
+                    widthBox.style.zIndex = 0;
 
                     xEnterButton.style.zIndex = 3;
                     yEnterButton.style.zIndex = 3;
                     radiusEnterButton.style.zIndex = 3;
+                    widthEnterButton.style.zIndex = 0;
+                    heightEnterButton.style.zIndex = 0;
+                    rotateShapeButton.style.zIndex = 0;
 
                     break;
                 default:
@@ -286,6 +296,7 @@ function draw(){
                     widthEnterButton.style.zIndex = 0;
                     heightEnterButton.style.zIndex = 0;
                     radiusEnterButton.style.zIndex = 0;
+                    rotateShapeButton.style.zIndex = 0;
 
             }
         } else {
