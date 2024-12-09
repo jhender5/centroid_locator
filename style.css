@@ -19,10 +19,17 @@ html, body{
     display: block;
 }
 
-#heightInput {
+#heightInput, #widthInput, #xPositionInput, #yPositionInput, #radiusInput {
+    width: 50px;
     background: white;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 0;
 }
+
+#heightEnter, #widthEnter, #xPositionEnter, #yPositionEnter, #radiusEnter, #invertShape, #Delete{
+    position: absolute;
+    z-index: 0;
+}
+

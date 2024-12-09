@@ -11,10 +11,6 @@ let shapeGraphDimensions={x:Math.floor(bgCanvas.width*(2/10)),
                                 y:Math.floor(bgCanvas.height*(2/10)),
                                 width:Math.floor(bgCanvas.width*(3/4)),
                                 height:Math.floor(bgCanvas.height*(6/10))};
-console.log(shapeGraphDimensions);
-
-
-
 
 graphCanvas.style.top=shapeGraphDimensions.y+'px';
 graphCanvas.style.left=shapeGraphDimensions.x+'px';
@@ -53,20 +49,20 @@ calculateCentroidButton.rectBGWidth=buttonSize*2.5;
 let rotateTriangleButton=new ShapeButton(bgCanvas.width*3/10, bgCanvas.height/10, buttonSize, "triangle");
 let editingShapeID=undefined;
 
-let xBox = document.getElementById('xBox');
+let xBox = document.getElementById('xPositionInput');
 xBox.style.left = (bgCanvas.width / 4) + 'px';
 xBox.style.top = (bgCanvas.height / 20) + 'px';
-let yBox = document.getElementById('yBox');
+let yBox = document.getElementById('yPositionInput');
 yBox.style.left = (bgCanvas.width / 4) + 'px';
 yBox.style.top = (bgCanvas.height / 10) + 'px';
-let widthBox = document.getElementById('widthBox');
+let widthBox = document.getElementById('widthInput');
 widthBox.style.left = (bgCanvas.width / 2) + 'px';
 widthBox.style.top = (bgCanvas.height / 20) + 'px';
-let heightBox = document.getElementById('heightBox');
+let heightBox = document.getElementById('heightInput');
 heightBox.style.left = (bgCanvas.width / 2) + 'px';
 heightBox.style.top = (bgCanvas.height / 10) + 'px';
-let radiusBox = document.getElementById('radiusBox');
-radiusBox.style.left = (bgCanvas.width / 4) + 'px';
+let radiusBox = document.getElementById('radiusInput');
+radiusBox.style.left = (bgCanvas.width / 2) + 'px';
 radiusBox.style.top = (bgCanvas.height / 10) + 'px';
 
 let xEnterButton=document.getElementById('xPositionEnter');
@@ -88,7 +84,7 @@ widthEnterButton.style.top = widthBox.style.top;
 heightEnterButton.style.left = (bgCanvas.width / 2 + heightBox.offsetWidth + 10) + 'px';
 heightEnterButton.style.top = heightBox.style.top;
 
-radiusEnterButton.style.left = (bgCanvas.width / 4 + radiusBox.offsetWidth + 10) + 'px';
+radiusEnterButton.style.left = (bgCanvas.width / 2 + radiusBox.offsetWidth + 10) + 'px';
 radiusEnterButton.style.top = radiusBox.style.top;
 
 //event listeners
@@ -123,8 +119,6 @@ graphCanvas.addEventListener("click", function (info){
         info=drawnShapes.getIntersectingShape(point);
         if(info){
             editingShapeID = info;
-            console.log(info);
-            console.log(editingShapeID);
         } else {
             editingShapeID = undefined;
         }
@@ -169,6 +163,7 @@ bgCanvas.addEventListener("click", function (info){
 
 
 xEnterButton.addEventListener("click", function () {
+    console.log("entering x");
     const xValue = parseFloat(xBox.value);
     if (!isNaN(xValue) && editingShapeID) {
         drawnShapes.modifyShapeByID(editingShapeID.id, {xPos: xValue});
@@ -178,7 +173,8 @@ xEnterButton.addEventListener("click", function () {
 yEnterButton.addEventListener("click", function () {
     const yValue = parseFloat(yBox.value);
     if (!isNaN(yValue) && editingShapeID) {
-        drawnShapes.modifyShapeByID(editingShapeID.id, {yPos: yValue});
+        let inverseYValue = graphCanvas.height - yValue;
+        drawnShapes.modifyShapeByID(editingShapeID.id, {yPos: inverseYValue});
     }
 });
 
@@ -207,7 +203,6 @@ radiusEnterButton.addEventListener("click", function () {
 
 //This function draws the user interface and canvas
 function draw(){
-
     //clear last frame
     bgCanvasCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height)
     graphCanvasCTX.clearRect(0,0, graphCanvas.width, graphCanvas.height)
@@ -215,57 +210,78 @@ function draw(){
     if(editingShapeID){
         const shapeData=drawnShapes.getPropertiesByID(editingShapeID.id)
         if(shapeData){
-
             switch (shapeData.type) {
                 case 'triangle':
-                    
-// Set z-index for text inputs and corresponding buttons
-                    xBox.zIndex = 3;
-                    yBox.zIndex = 3;
-                    widthBox.zIndex = 3;
-                    heightBox.zIndex = 3;
+                    xBox.style.zIndex = 3;
+                    yBox.style.zIndex = 3;
+                    widthBox.style.zIndex = 3;
+                    heightBox.style.zIndex = 3;
 
-                    xEnterButton.zIndex = 3;
-                    yEnterButton.zIndex = 3;
-                    widthEnterButton.zIndex = 3;
-                    heightEnterButton.zIndex = 3;
+                    xEnterButton.style.zIndex = 3;
+                    yEnterButton.style.zIndex = 3;
+                    widthEnterButton.style.zIndex = 3;
+                    heightEnterButton.style.zIndex = 3;
                     break;
                 case 'rectangle':
-                    xBox.zIndex = 3;
-                    yBox.zIndex = 3;
-                    widthBox.zIndex = 3;
-                    heightBox.zIndex = 3;
+                    xBox.style.zIndex = 3;
+                    yBox.style.zIndex = 3;
+                    widthBox.style.zIndex = 3;
+                    heightBox.style.zIndex = 3;
 
-                    xEnterButton.zIndex = 3;
-                    yEnterButton.zIndex = 3;
-                    widthEnterButton.zIndex = 3;
-                    heightEnterButton.zIndex = 3;
+                    xEnterButton.style.zIndex = 3;
+                    yEnterButton.style.zIndex = 3;
+                    widthEnterButton.style.zIndex = 3;
+                    heightEnterButton.style.zIndex = 3;
                     break;
                 case 'circle':
-                    xBox.zIndex = 3;
-                    yBox.zIndex = 3;
-                    radiusBox.zIndex = 3;
+                    xBox.style.zIndex = 3;
+                    yBox.style.zIndex = 3;
+                    radiusBox.style.zIndex = 3;
 
-                    xEnterButton.zIndex = 3;
-                    yEnterButton.zIndex = 3;
-                    radiusEnterButton.zIndex = 3;
+                    xEnterButton.style.zIndex = 3;
+                    yEnterButton.style.zIndex = 3;
+                    radiusEnterButton.style.zIndex = 3;
 
                     break;
                 default:
-                    xBox.zIndex = 0;
-                    yBox.zIndex = 0;
-                    widthBox.zIndex = 0;
-                    heightBox.zIndex = 0;
-                    radiusBox.zIndex = 0;
+                    xBox.style.zIndex = 0;
+                    yBox.style.zIndex = 0;
+                    widthBox.style.zIndex = 0;
+                    heightBox.style.zIndex = 0;
+                    radiusBox.style.zIndex = 0;
 
-                    xEnterButton.zIndex = 0;
-                    yEnterButton.zIndex = 0;
-                    widthEnterButton.zIndex = 0;
-                    heightEnterButton.zIndex = 0;
-                    radiusEnterButton.zIndex = 0;
+                    xEnterButton.style.zIndex = 0;
+                    yEnterButton.style.zIndex = 0;
+                    widthEnterButton.style.zIndex = 0;
+                    heightEnterButton.style.zIndex = 0;
+                    radiusEnterButton.style.zIndex = 0;
 
             }
+        } else {
+            xBox.style.zIndex = 0;
+            yBox.style.zIndex = 0;
+            widthBox.style.zIndex = 0;
+            heightBox.style.zIndex = 0;
+            radiusBox.style.zIndex = 0;
+
+            xEnterButton.style.zIndex = 0;
+            yEnterButton.style.zIndex = 0;
+            widthEnterButton.style.zIndex = 0;
+            heightEnterButton.style.zIndex = 0;
+            radiusEnterButton.style.zIndex = 0;
         }
+    } else {
+        xBox.style.zIndex = 0;
+        yBox.style.zIndex = 0;
+        widthBox.style.zIndex = 0;
+        heightBox.style.zIndex = 0;
+        radiusBox.style.zIndex = 0;
+
+        xEnterButton.style.zIndex = 0;
+        yEnterButton.style.zIndex = 0;
+        widthEnterButton.style.zIndex = 0;
+        heightEnterButton.style.zIndex = 0;
+        radiusEnterButton.style.zIndex = 0;
     }
 
     //ui for adding shapes
@@ -301,8 +317,13 @@ function draw(){
         yCenter=bgCanvas.height*9/10;
         let message="The Centroid is: "
         message=message.concat("(", centroid.x.toFixed(1), ", ", centroid.y.toFixed(1), ")")
-        console.log(message);
         bgCanvasCtx.fillText(message, xCenter, yCenter);
+
+        graphCanvasCTX.beginPath();
+        graphCanvasCTX.arc(centroid.x, graphCanvas.height-centroid.y, 5, 0, Math.PI * 2);
+        graphCanvasCTX.fillStyle = 'black';
+        graphCanvasCTX.fill();
+        graphCanvasCTX.closePath();
     }
 
 

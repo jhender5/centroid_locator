@@ -5,13 +5,10 @@ class CompositeShape{
     }
 
     addShape(shape){
-        console.log("adding shape")
         this.#shapes.push(shape);
-        console.log(this.#shapes);
     }
 
     computeCentroid(steps, graph) {
-        console.log("calculating centroid");
         let largestXValue = 0;
         let largestYValue = 0;
 
@@ -48,17 +45,14 @@ class CompositeShape{
                     break;
             }
         }
-        console.log(largestXValue);
-        console.log(largestYValue);
 
         let dA = largestXValue / steps * largestYValue / steps;
         let area = 0;
         let xdA = 0;
         let ydA = 0;
-        console.log(steps);
         for (let x = 0; x <= largestXValue; x += largestXValue / steps) {
             for (let y = 0; y <= largestYValue; y += largestYValue / steps) {
-                console.log("looping")
+
                 if (this.invertedIntersectsCompositeShape({x: x, y: y}, graph)) {
                     area += dA;
                     xdA += x * dA;
@@ -66,14 +60,8 @@ class CompositeShape{
                 }
             }
         }
-        console.log(dA);
-        console.log(area);
-        console.log(ydA);
-        console.log(xdA);
         if (area > 0) {
-            let centroid = {x: xdA / area, y: ydA / area}
-            console.log(centroid)
-            return centroid;
+            return {x: xdA / area, y: ydA / area};
         }
         return undefined;
     }
@@ -101,10 +89,11 @@ class CompositeShape{
     }
 
     modifyShapeByID(id, ...attributes){
-        const matchesID = (element) => element.id = id;
+        const matchesID = (element) => element.id === id;
         let index=this.#shapes.findIndex(matchesID);
         if(index >= 0){
-            type = this.#shapes[index].type;
+            let type = this.#shapes[index].type;
+            attributes=attributes[0];
             switch (type) {
                 case 'triangle':
                     if(attributes.width){
@@ -139,6 +128,7 @@ class CompositeShape{
                         this.#shapes[index].height = attributes.height;
                     }
                     if(attributes.xPos){
+                        console.log(this.#shapes[index].xPos);
                         this.#shapes[index].xPos = attributes.xPos;
                     }
                     if (attributes.yPos){
@@ -154,7 +144,7 @@ class CompositeShape{
     }
 
     getPropertiesByID(id){
-        const matchesID = (element) => element.id = id;
+        const matchesID = (element) => element.id === id;
         const index=this.#shapes.findIndex(matchesID);
         if (index>=0){
             const data={id:this.#shapes[index].id, type:this.#shapes[index].type};
