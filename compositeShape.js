@@ -5,13 +5,10 @@ class CompositeShape{
     }
 
     addShape(shape){
-        console.log("adding shape")
         this.#shapes.push(shape);
-        console.log(this.#shapes);
     }
 
     computeCentroid(steps, graph) {
-        console.log("calculating centroid");
         let largestXValue = 0;
         let largestYValue = 0;
 
@@ -48,17 +45,14 @@ class CompositeShape{
                     break;
             }
         }
-        console.log(largestXValue);
-        console.log(largestYValue);
 
         let dA = largestXValue / steps * largestYValue / steps;
         let area = 0;
         let xdA = 0;
         let ydA = 0;
-        console.log(steps);
         for (let x = 0; x <= largestXValue; x += largestXValue / steps) {
             for (let y = 0; y <= largestYValue; y += largestYValue / steps) {
-                console.log("looping")
+
                 if (this.invertedIntersectsCompositeShape({x: x, y: y}, graph)) {
                     area += dA;
                     xdA += x * dA;
@@ -66,22 +60,21 @@ class CompositeShape{
                 }
             }
         }
-        console.log(dA);
-        console.log(area);
-        console.log(ydA);
-        console.log(xdA);
         if (area > 0) {
-            let centroid = {x: xdA / area, y: ydA / area}
-            console.log(centroid)
-            return centroid;
+            return {x: xdA / area, y: ydA / area};
         }
         return undefined;
     }
 
     renderShapes(context, canvas){
-        const shapeColor='pink';
-        context.fillStyle='pink';
+        let shapeColor;
         for(const shape of this.#shapes) {
+            if(shape.isHole){
+                shapeColor="white";
+            } else {
+                shapeColor='pink';
+            }
+            context.fillStyle=shapeColor;
             if (shape.type === "rectangle"){
                 let rectXPos= shape.xPos - shape.width/2;
                 let rectYpos=shape.yPos - shape.width/2;
@@ -101,10 +94,14 @@ class CompositeShape{
     }
 
     modifyShapeByID(id, ...attributes){
-        const matchesID = (element) => element.id = id;
+        const matchesID = (element) => element.id === id;
         let index=this.#shapes.findIndex(matchesID);
         if(index >= 0){
-            type = this.#shapes[index].type;
+            let type = this.#shapes[index].type;
+            attributes=attributes[0];
+            if(attributes.invertIsHole){
+                this.#shapes[index].invert();
+            }
             switch (type) {
                 case 'triangle':
                     if(attributes.width){
@@ -118,6 +115,12 @@ class CompositeShape{
                     }
                     if (attributes.yPos){
                         this.#shapes[index].yPos = attributes.yPos;
+                    }
+                    if(attributes.rotate){
+                        this.#shapes[index].orientation = this.#shapes[index].orientation + 1;
+                        if (this.#shapes[index].orientation > 4) {
+                            this.#shapes[index].orientation = 1;
+                        }
                     }
                     break;
                 case 'circle':
@@ -154,10 +157,10 @@ class CompositeShape{
     }
 
     getPropertiesByID(id){
-        const matchesID = (element) => element.id = id;
+        const matchesID = (element) => element.id === id;
         const index=this.#shapes.findIndex(matchesID);
         if (index>=0){
-            const data={id:this.#shapes[index].id};
+            const data={id:this.#shapes[index].id, type:this.#shapes[index].type};
 
             switch (this.#shapes[index].type) {
                 case 'triangle':
@@ -183,7 +186,7 @@ class CompositeShape{
             }
             return data;
         }
-        return false;
+        return undefined;
     }
 
     getIntersectingShape(point){
@@ -222,6 +225,16 @@ class CompositeShape{
             }
         }
         return intersectsShape;
+    }
+
+    deleteShapeByID(id) {
+        const matchesID = (element) => element.id === id;
+        const index = this.#shapes.findIndex(matchesID);
+        if (index >= 0) {
+            this.#shapes.splice(index, 1);
+            return true;
+        }
+        return false;
     }
 }
 

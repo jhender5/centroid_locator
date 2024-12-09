@@ -1,20 +1,35 @@
 
 #centroidCanvas {
-    background: silver;
+    background: lightblue;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#graphSpace{
+    background: black;
+    position: absolute;
+    z-index: 2;
+}
+
+html, body{
+    margin: 0;
+    overflow: hidden;
+    display: block;
+}
+
+#heightInput, #widthInput, #xPositionInput, #yPositionInput, #radiusInput {
+    width: 50px;
+    background: white;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 0;
 }
 
-#graphSpace{
-    background: black;
+#heightEnter, #widthEnter, #xPositionEnter, #yPositionEnter, #radiusEnter, #Invert, #Delete, #Rotate{
     position: absolute;
-    z-index: 1;
+    z-index: 0;
 }
 
-html, body{
-    margin: 0px;
-    overflow: hidden;
-    display: block;
-}

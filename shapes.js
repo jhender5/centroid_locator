@@ -5,6 +5,12 @@ class Shape{
     #isHole;
     #type;
     #id;
+    constructor(xPos, yPos, id) {
+        this.#xPos = xPos;
+        this.#yPos = yPos;
+        this.#id = id;
+        this.isHole = false;
+    }
 
     get id() {
         return this.#id;
@@ -22,17 +28,14 @@ class Shape{
         this.#type = value;
     }
 
-    constructor(xPos, yPos) {
-        this.#xPos = xPos;
-        this.#yPos = yPos;
-    }
-
     get xPos() {
         return this.#xPos;
     }
 
     set xPos(value) {
+        console.log(value);
         this.#xPos = value;
+        console.log(this.#xPos);
     }
 
     get yPos() {
@@ -54,12 +57,16 @@ class Shape{
     intersects(point){
         throw new Error('You have to implement the method intersect!');
     }
+
+    invert(){
+        this.isHole = !this.isHole;
+    }
 }
 
 class Circle extends Shape{
     #radius;
-    constructor(xPos, yPos, radius) {
-        super(xPos, yPos);
+    constructor(xPos, yPos, radius, id) {
+        super(xPos, yPos, id);
         this.#radius = radius;
         super.type="circle"
     }
@@ -98,8 +105,8 @@ class Circle extends Shape{
 class Rectangle extends Shape{
     #width;
     #height;
-    constructor(xPos, yPos, width, height) {
-        super(xPos, yPos)
+    constructor(xPos, yPos, width, height, id) {
+        super(xPos, yPos, id)
         this.#width = width;
         this.#height = height;
         super.type='rectangle'
@@ -145,8 +152,8 @@ class Rectangle extends Shape{
 class Triangle extends Rectangle{
     #orientation;
 
-    constructor(xPos, yPos, width, height, orientation,) {
-        super(xPos, yPos, width, height);
+    constructor(xPos, yPos, width, height, orientation, id) {
+        super(xPos, yPos, width, height, id);
         this.#orientation = orientation;
         super.type='triangle'
     }
