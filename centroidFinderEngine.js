@@ -195,6 +195,13 @@ function draw(){
         }
     }
 
+    if(centroid){
+        graphCanvasCTX.beginPath();
+        graphCanvasCTX.arc(centroid.x, graphCanvas.height- centroid.y, 5, 0, Math.PI * 2);
+        graphCanvasCTX.fillStyle = 'black';
+        graphCanvasCTX.fill();
+        graphCanvasCTX.closePath();
+    }
     requestAnimationFrame(draw);
 }
 
