@@ -91,8 +91,6 @@ heightEnterButton.style.top = heightBox.style.top;
 radiusEnterButton.style.left = (bgCanvas.width / 4 + radiusBox.offsetWidth + 10) + 'px';
 radiusEnterButton.style.top = radiusBox.style.top;
 
-
-
 //event listeners
 bgCanvas.addEventListener("mousemove", function (info){
     bgMouseX=info.x;
@@ -169,8 +167,6 @@ bgCanvas.addEventListener("click", function (info){
     }
 })
 
-
-// Add event listeners for the buttons
 
 xEnterButton.addEventListener("click", function () {
     const xValue = parseFloat(xBox.value);
