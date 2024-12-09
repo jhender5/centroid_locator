@@ -175,6 +175,7 @@ xEnterButton.addEventListener("click", function () {
     if (!isNaN(xValue) && editingShapeID) {
         console.log(xValue);
         drawnShapes.modifyShapeByID(editingShapeID.id, {xPos: xValue});
+        xBox.value = '';
     }
 });
 
@@ -183,6 +184,7 @@ yEnterButton.addEventListener("click", function () {
     if (!isNaN(yValue) && editingShapeID) {
         let inverseYValue = graphCanvas.height - yValue;
         drawnShapes.modifyShapeByID(editingShapeID.id, {yPos: inverseYValue});
+        yBox.value = '';
     }
 });
 
@@ -190,6 +192,7 @@ widthEnterButton.addEventListener("click", function () {
     const widthValue = parseFloat(widthBox.value);
     if (!isNaN(widthValue) && editingShapeID) {
         drawnShapes.modifyShapeByID(editingShapeID.id, {width: widthValue});
+        widthBox.value = '';
     }
 });
 
@@ -197,6 +200,7 @@ heightEnterButton.addEventListener("click", function () {
     const heightValue = parseFloat(heightBox.value);
     if (!isNaN(heightValue) && editingShapeID) {
         drawnShapes.modifyShapeByID(editingShapeID.id, {height: heightValue});
+        heightBox.value = '';
     }
 });
 
@@ -204,11 +208,9 @@ radiusEnterButton.addEventListener("click", function () {
     const radiusValue = parseFloat(radiusBox.value);
     if (!isNaN(radiusValue) && editingShapeID) {
         drawnShapes.modifyShapeByID(editingShapeID.id, {radius: radiusValue});
+        radiusBox.value = '';
     }
 });
-
-
-// Add event listeners for Delete and Invert buttons
 
 deleteButton.addEventListener("click", function () {
     if (editingShapeID) {
@@ -330,6 +332,12 @@ function draw(){
         deleteButton.style.zIndex = 0;
         invertShapeButton.style.zIndex = 0;
         rotateShapeButton.style.zIndex = 0;
+
+        xBox.value = '';
+        yBox.value = '';
+        widthBox.value = '';
+        heightBox.value = '';
+        radiusBox.value = '';
     }
 
     //ui for adding shapes
