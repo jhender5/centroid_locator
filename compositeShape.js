@@ -77,7 +77,7 @@ class CompositeShape{
             context.fillStyle=shapeColor;
             if (shape.type === "rectangle"){
                 let rectXPos= shape.xPos - shape.width/2;
-                let rectYpos=shape.yPos - shape.width/2;
+                let rectYpos=shape.yPos - shape.height/2;
                 context.fillRect(rectXPos, rectYpos, shape.width, shape.height);
 
             } else if (shape.type === 'circle') {
